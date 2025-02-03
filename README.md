@@ -40,3 +40,16 @@ npm run build
 ```
 yarn build
 ```
+## Данные и типы данных, используемых в приложении
+## Карточка продукта
+
+```
+interface IProduct {
+  id: string;
+  description: string;
+  image: string;
+  title: string;
+  category: string;
+  price: number
+}
+```
