@@ -49,18 +49,32 @@ yarn build
 - Представление (View) реализует отображение данных (Модели).
 - Презентер (Presenter) обеспечивает взаимодействие между Моделью и Представлением, например, извлекает данные из Модели и форматирует их для отображения в Представлении.   
 
-## Данные и типы данных, используемых в приложении
+## Данные и типы данных, используемые в приложении
 
-Карточка продукта
+Типы данных карточки
 
 ```
-interface IProduct {
+type TCardCategory = "софт-скил" | "другое" | "дополнительное" | "кнопка" | "хард-скил";
+```
+
+Карточка
+
+```
+interface ICard {
   id: string;
   description: string;
-  image: string;
-  title: string;
+  image: string;  
+  title: string;  
   category: string;
-  price: number
+  price: number | null;
+  index?: number;
 }
 ```
 
+Массив карточек
+
+```
+interface ICardArray {
+  items: ICard[];
+} 
+```
