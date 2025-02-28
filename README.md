@@ -127,13 +127,13 @@ interface IOrderDataSecond {
 
 ```js
 interface IOderData {    
-    setOrderDataFirst(): void;
-    validateOrderFirst(): void;
-    clearOrderFirst(): void;
-    setOrderDataSecond(): void;    
-    validateOrderSecond(): void;    
-    clearOrderSecond(): void;
-    formErrors: FormErrors;
+  setOrderDataFirst(): void;
+  validateOrderFirst(): void;
+  clearOrderFirst(): void;
+  setOrderDataSecond(): void;    
+  validateOrderSecond(): void;    
+  clearOrderSecond(): void;
+  formErrors: FormErrors;
 }
 ```
 

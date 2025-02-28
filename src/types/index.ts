@@ -1,65 +1,69 @@
 //Карточка
 // Данные по карточке
-interface ICard {
-    id: string;
-    description: string;
-    image: string;  
-    title: string;  
-    category: string;
-    price: number | null;
-    index?: number;
+export interface ICard {
+  id: string;
+  description: string;
+  image: string;  
+  title: string;  
+  category: string;
+  price: number | null;
+  index?: number;
 }
 
 // Массив карточек
-interface ICardArray {
-    items: ICard[];
+export interface ICardArray {
+  items: ICard[];
 }
 
 // Данные карточки, используемые в корзине
-type TCardBasket = Pick<ICard, 'id' | 'title' | 'price' | 'index'>; //??
+export type TCardBasket = Pick<ICard, 'id' | 'title' | 'price' | 'index'>;
 
 //Корзина
-interface IBasket {
-    items: TCardBasket[];
-    addToBasket(): void;
-    removeFromBasket(): void;
-    getCardBasket(): TCardBasket[];
-    getCardBasketAmount(): number;
-    getPrice(): number;
-    checkCardInBasket(): void;
-    clearBasket(): void;
+export interface IBasket {
+  items: TCardBasket[];
+  addToBasket(): void;
+  removeFromBasket(): void;
+  getCardBasket(): TCardBasket[];
+  getCardBasketAmount(): number;
+  getPrice(): number;
+  checkCardInBasket(): void;
+  clearBasket(): void;
 }
 
 //Заказ
-interface IOrderForms {
-    payment: string; //способ оплаты
-    address: string; // адрес доставки 
-    email: string; //email
-    phone: string; //телефон
+export interface IOrderForms {
+  payment: string;
+  address: string;
+  email: string; 
+  phone: string; 
 }
 
-type FormErrors = Partial<Record<keyof IOrderForms, string>>;
-
-// Данные заказа, используемые в 1 модальном окне
-interface IOrderFormsFirst {
-    payment: string;
-	address: string;
+// Данные заказа при выборе оплаты и адреса
+export interface IOrderFormFirst {
+  payment: string;
+  address: string;
 }
 
-// Данные заказа, используемые в 2 модальном окне
-interface IOrderFormsSecond {
-    email: string;
-    phone: string;
+// Данные заказа при вводе почты и телефона
+export interface IOrderFormSecond {
+  email: string;
+  phone: string;
 }
 
-interface IOderFormsData {
-    formErrors: FormErrors;
-    setOrderFieldFirst(): void;
-    setOrderFieldSecond(): void;
-    validateOrderFirst(): void;
-    validateOrderSecond(): void;
-    clearorderfirst(): void;
-    clearordersecond(): void;
+// Данные заказа
+export interface IOderFormsData {
+  setOrderDataFirst(): void;
+  validateOrderFirst(): void;
+  clearOrderFirst(): void;
+  setOrderDataSecond(): void;    
+  validateOrderSecond(): void;    
+  clearOrderSecond(): void;
+  formErrors: FormErrors;
+}
+
+export interface IOrderResult {
+  id: string;
+  amount: number;
 }
 
 // Типизируем Коллекции
@@ -95,6 +99,8 @@ interface IOrderResult {
     id: string;
     total: number;
 }
+
+type FormErrors = Partial<Record<keyof IOrder, string>>;
 
 export {
     TCardCategoryType,
