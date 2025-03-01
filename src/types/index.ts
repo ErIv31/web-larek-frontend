@@ -75,7 +75,7 @@ export interface ICardBasketData {
     addToBasket(): void;
     removeFromBasket(): void; 
     getCardBasket(): TCardBasket[];
-    getCardBasketAmounter(): number;    
+    getCardBasketAmount(): number;    
     getPrice(): number;
     checkCardinBasket(): void;
     clearBasket(): void;
