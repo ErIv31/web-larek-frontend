@@ -95,20 +95,10 @@ interface IBasket {
 ```
 
 Заказ
-
-```js
-interface IOrder {
-  payment: string;
-  address: string;
-  email: string;
-  phone: string;
-}
-```
-
 Данные пользователя при выборе оплаты и адреса
 
 ```js
-interface IOrderDataFirst {
+interface IOrderPayment {
   payment: string;
   address: string;
 }
@@ -117,7 +107,7 @@ interface IOrderDataFirst {
 Данные пользователя при вводе почты и телефона
 
 ```js
-interface IOrderDataSecond {
+interface IOrderContacts {
   email: string;
   phone: string;
 }
@@ -287,7 +277,7 @@ type FormErrors = Partial<Record<keyof IOrder, string>>;
 - `set image` - сохраняет изображение карточки;
 - `set description` - записывает описание товара;
 
-## Класс OrderFormPaymentAddress
+## Класс OrderFormPayment
 Класс OrderFormPaymentAddress реализует форму для отображения адреса и способа оплаты.
 
 Данные полей класса:
@@ -297,7 +287,7 @@ type FormErrors = Partial<Record<keyof IOrder, string>>;
 - `set buttonsPayment` - добовляет выбранный способ оплаты и меняет статус кнопки на активный;
 - `set address` - добавляет адрес доставки.
 
-## Класс OrderFormEmailPhone
+## Класс OrderFormContacts
 Класс OrderFormEmailPhone реализует форму для отображения электронный почты и телефона пользователя.
 
 Методы:
