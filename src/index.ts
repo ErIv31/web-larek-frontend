@@ -13,7 +13,7 @@ import { Success } from './components/view/Success';
 import { CardsData } from './components/model/CardsData';
 import { BasketData } from './components/model/BasketData';
 import { OrderData } from './components/model/OrderData';
-import { ICard, ICardArray, IOrderPayment, IOrderContacts, IBasket, TCardBasket, IOderData } from './types';
+import { ICard, ICardArray, IOrderPayment, IOrderContacts, TCardBasket } from './types';
 
 const events = new EventEmitter();
 const api = new AppApi(CDN_URL, API_URL);
