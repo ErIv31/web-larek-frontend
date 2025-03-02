@@ -34,6 +34,13 @@ const paymentdeliverly = new OrderFormPayment(cloneTemplate(paymentTemplate), ev
 const contacts = new OrderFormContacts(cloneTemplate(contactsTemplate), events);
 const success = new Success(cloneTemplate(successTemplate), events);
 
+api.getCardsArrayApi()
+  .then((res) => {
+    cardsData.items = res;
+    events.emit('cardsList: change');
+  })
+  .catch(console.error);
+
 events.on('modal: open', () => {
   page.locked = true;
 });
@@ -48,7 +55,7 @@ events.on<ICardArray>('cardsList: change', () => {
       onClick: () => events.emit('card: select', item)
     });
     return card.render(item);
-  });
+  });  
 });
 
 events.on('card: select', (item: ICard) => {
@@ -116,9 +123,11 @@ events.on('orderPaymentAddress: open', () => {
     valid: false,
     errors: []
   })});
+  console.log('rabotaet');
 });
 
 events.on('formPaymentAddress: submit', () => {
+  console.log('Кнопка "Далее" нажата!');
   events.emit('orderEmailPhone: open');
 });
 
@@ -161,6 +170,8 @@ events.on('formPaymentAddress: change', (errors: Partial<IOrderPayment>) => {
   const { payment, address } = errors;
   paymentdeliverly.valid = !payment && !address;
   paymentdeliverly.errors = Object.values({ payment, address }).filter(i => !!i).join('; ');
+
+  console.log('Статус валидации:', paymentdeliverly.valid);
 });
 
 events.on(/^order\..*:change/, (data: { field: keyof IOrderPayment, value: string }) => {
@@ -177,9 +188,4 @@ events.on(/^contacts\..*:change/, (data: { field: keyof IOrderContacts, value: s
   orederData.setOrderDataSecond(data.field, data.value);
 });
 
-api.getCardsArrayApi()
-  .then((res) => {
-    cardsData.items = res;
-    console.log(cardsData.items);
-  })
-  .catch(console.error);
+
