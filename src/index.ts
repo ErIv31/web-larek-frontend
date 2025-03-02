@@ -110,7 +110,7 @@ events.on('basket: submit', () => {
 });
 
 events.on('orderPaymentAddress: open', () => {
-  modal.render({content: payment.render({
+  modal.render({content: paymentdeliverly.render({
     payment: '',
     address: '',
     valid: false,
@@ -183,4 +183,3 @@ api.getCardsArrayApi()
     console.log(cardsData.items);
   })
   .catch(console.error);
-  
