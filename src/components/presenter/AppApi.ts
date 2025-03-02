@@ -1,4 +1,4 @@
-import { Api, ApiListResponse, ApiPostMethods } from "../base/api";
+import { Api, ApiListResponse } from "../base/api";
 import { ICard, IOrder, IOrderResult } from "../../types/index";
 
 export interface IAppApi {
@@ -15,11 +15,18 @@ export class AppApi extends Api implements IAppApi {
   }
 
   getCardApi(id: string): Promise<ICard> {
-      return this.get(`/product/${id}`).then((item: ICard) => ({...item, image: this.cdn + item.image}));
+      return this.get(`/product/${id}`).then((item: ICard) => ({
+        ...item, 
+        image: this.cdn + item.image
+      }));
   }
 
   getCardsArrayApi(): Promise<ICard[]> {
-      return this.get('/product/').then((data: ApiListResponse<ICard>) => data.items.map((item) => ({...item, image: this.cdn + item.image})));
+      return this.get('/product').then((data: ApiListResponse<ICard>) => 
+        data.items.map((item) => ({
+          ...item, 
+          image: this.cdn + item.image
+        })));
   }
 
   postOrderCardsApi(order: IOrder): Promise<IOrderResult> {
