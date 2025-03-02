@@ -177,9 +177,9 @@ events.on(/^contacts\..*:change/, (data: { field: keyof IOrderContacts, value: s
   orederData.setOrderDataSecond(data.field, data.value);
 });
 
-api.getCardsArrayApi()
-  .then((res) => {
-    cardsData.items = res;
-    console.log(cardsData.items);
-  })
-  .catch(console.error);
+// api.getCardsArrayApi()
+//   .then((res) => {
+//     cardsData.items = res;
+//     console.log(cardsData.items);
+//   })
+//   .catch(console.error);
