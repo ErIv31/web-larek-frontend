@@ -9,42 +9,30 @@ interface IBasket {
 
 export class Basket extends Component<IBasket> {
   protected _title: HTMLElement;
-  protected _basketList: HTMLElement;
-  protected _basketButton: HTMLButtonElement;
+  protected _list: HTMLElement;
+  protected _button: HTMLButtonElement;
   protected _total: HTMLElement;
 
   constructor(container: HTMLElement, protected events: IEvents) {
-    super(container);
-    this._title = ensureElement<HTMLElement>('.modal__title', container);
-    this._basketList = ensureElement<HTMLElement>('.basket__list', container);
-    this._basketButton = ensureElement<HTMLButtonElement>('.basket__button', container);
+    super(container);    
+    this._list = ensureElement<HTMLElement>('.basket__list', container);
+    this._button = ensureElement<HTMLButtonElement>('.basket__button', container);
     this._total = ensureElement<HTMLElement>('.basket__price', container);
     this.items = [];
-    this._basketButton.addEventListener('click', () => {this.events.emit('basket: submit');})
+    this._button.addEventListener('click', () => { this.events.emit('order:open') });
   }
 
   set items(items: HTMLElement[]) {
     if(items.length) {
-      this._basketList.replaceChildren(...items);
-      this._basketButton.removeAttribute('disablesd');
+      this._list.replaceChildren(...items);
+      this.setDisabled(this._button, false);
     } else {
-      this._basketList.replaceChildren(createElement<HTMLParagraphElement>('p', {textContent: 'Корзина пуста'}));
+      this._list.replaceChildren(createElement<HTMLParagraphElement>('p', {textContent: 'Корзина пуста'}));
+      this.setDisabled(this._button, true);
     };
-  }
-
-  set title(value: string) {
-    this.setText(this._title, value);
-  }
-
-  set basketList(value: HTMLElement[]) {
-    this.items = value;
   }
 
   set total(value: number) {
     this.setText(this._total, `${value} синапсов`);
-  }
-
-  updateIndexList() {
-    Array.from(this._basketList.children).forEach((item, index) => (item.querySelector('.basket__item-index')!.textContent = (index + 1).toString()));
-  }
+  }  
 }
