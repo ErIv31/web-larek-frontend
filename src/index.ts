@@ -10,9 +10,9 @@ import { Basket } from './components/view/Basket';
 import { OrderFormPayment } from './components/view/OrderFormPayment';
 import { OrderFormContacts } from './components/view/OrderFormContacts';
 import { Success } from './components/view/Success';
-import { CardsData } from './components/model/CardsData';
-import { BasketData } from './components/model/BasketData';
-import { OrderData } from './components/model/OrderData';
+import { CardsData } from './components/model/CardsModel';
+import { BasketData } from './components/model/BasketModel';
+import { OrderData } from './components/model/OrderModel';
 import { ICard, ICardArray, IOrderPayment, IOrderContacts, TCardBasket } from './types';
 
 const events = new EventEmitter();
