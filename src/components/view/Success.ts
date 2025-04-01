@@ -1,31 +1,30 @@
 import { Component } from "../base/component";
-import { IEvents } from "../base/events";
-import { ensureElement } from "../../utils/utils";
+import { ensureElement, formatNumber } from "../../utils/utils";
 
 interface ISuccess {
   total: number;
 }
 
+interface ISuccessActions {
+  onClick: () => void;
+}
+
 export class Success extends Component<ISuccess> {
-  protected _title: HTMLElement;
   protected _total: HTMLElement;
-  protected _button: HTMLButtonElement;
+  protected _close: HTMLButtonElement;
 
-  constructor(container: HTMLElement, protected events: IEvents) {
+  constructor(container: HTMLElement, actions: ISuccessActions) {
     super(container);
-    this._title = ensureElement<HTMLElement>('.order-success__title', container);
+
     this._total = ensureElement<HTMLElement>('.order-success__description', container);
-    this._button = ensureElement<HTMLButtonElement>('.order-success__close, container');
-    this._button.addEventListener('click', () => {
-      this.events.emit('success: close');
-    });
-  }
+    this._close = ensureElement<HTMLButtonElement>('.order-success__close, container');
+    
+    if (actions?.onClick) {
+      this._close.addEventListener('click', actions.onClick);
+    }
+  } 
 
-  set title(value: string) {
-    this.setText(this._title, value);
-  }
-
-  set total(value: HTMLElement) {
-    this.setText(this._total, `Списано ${value} синапсов`);
+  set total(value: number) {
+    this.setText(this._total, `Списано ${formatNumber(value)} синапсов`);
   }
 }
