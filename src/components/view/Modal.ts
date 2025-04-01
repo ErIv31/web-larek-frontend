@@ -2,41 +2,43 @@ import { Component } from "../base/component";
 import { IEvents } from "../base/events";
 import { ensureElement } from "../../utils/utils";
 
-interface IModal {
+interface IModalData {
   content: HTMLElement;
 }
 
-export class Modal extends Component<IModal> {
+export class Modal extends Component<IModalData> {
   protected _content: HTMLElement;
   protected _closeButton: HTMLButtonElement;
 
   constructor(container: HTMLElement, protected events: IEvents) {
     super(container);
-    this._content = ensureElement<HTMLElement>('.modal__content', container);
-    this._content.addEventListener('click', (event) => event.stopPropagation());
+
     this._closeButton = ensureElement<HTMLButtonElement>('.modal__close', container);
-    this._closeButton.addEventListener('click', this.closeModal.bind(this));
-    this.container.addEventListener('click', this.closeModal.bind(this));
-  }
+    this._content = ensureElement<HTMLElement>('.modal__content', container);
 
-  openModal() {
-    this.container.classList.add('modal_active');
-    this.events.emit('modal: open');
-  }
-
-  closeModal() {
-    this.container.classList.remove('modal_active');
-    this.content = null;
-    this.events.emit('modal: close');
+    this._closeButton.addEventListener('click', this.close.bind(this));
+    this.container.addEventListener('click', this.close.bind(this));
+    this._content.addEventListener('click', (event) => event.stopPropagation());    
   }
 
   set content(value: HTMLElement) {
     this._content.replaceChildren(value);
   }
+  
+  open() {
+    this.container.classList.add('modal_active');
+    this.events.emit('modal:open');
+  }
 
-  render(data: IModal): HTMLElement {
+  close() {
+    this.container.classList.remove('modal_active');
+    this.content = null;
+    this.events.emit('modal:close');
+  }  
+
+  render(data: IModalData): HTMLElement {
     super.render(data);
-    this.openModal();
+    this.open();
     return this.container;
   }
 }
