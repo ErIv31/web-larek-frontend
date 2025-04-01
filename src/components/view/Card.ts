@@ -80,7 +80,7 @@ export class Card<T> extends Component<ICard<T>> {
 
   set price(value: number | null) {
     if (value !== null) {
-      this.setText(this._price, `${value} синапсов`);
+      this.setText(this._price, `${formatNumber(value)} синапсов`);
     } else {
       this.setText(this._price, 'Бесценно');
     }    
