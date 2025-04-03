@@ -14,7 +14,7 @@ import { Success } from './components/view/Success';
 import { CardsData } from './components/model/CardsModel';
 import { BasketData } from './components/model/BasketModel';
 import { OrderData } from './components/model/OrderModel';
-import { IProduct, IOrderForm, IContactsForm, IOrder, IOrderResult } from './types';
+import { IProduct, IOrderForm, IContactsForm, IOrderResult } from './types';
 
 const events = new EventEmitter();
 const api = new AppApi(CDN_URL, API_URL);
@@ -54,7 +54,7 @@ events.on('items:changed', () => {
   page.counter = basketData.getBasketItems().length;
 });
 
-events.on('contacs:submit', () => {
+events.on('contacts:submit', () => {
   api.postOrder(orderData.order)
     .then((result: IOrderResult) => {
       const success = new Success(cloneTemplate(successTemplate), {
@@ -100,3 +100,82 @@ events.on(/^order\..*:change/, (data: { field: keyof IOrderForm, value: string }
 events.on('card:select', (item: IProduct) => {
   cardsData.setPreview(item);
 });
+
+events.on('preview:changed', (item: IProduct) => {
+  const card = new Card(cloneTemplate(cardPreviewTemplate), {
+    onClick: () => {
+      basketData.toogleOrderedItem(item.id, !basketData.checkItemInBasket(item.id));
+      events.emit('preview:changed', item);
+    }
+  });
+  card.toggleButton(basketData.checkItemInBasket(item.id));
+  modal.render({
+    content: card.render({
+      category: item.category,
+      title: item.title,
+      description: item.description,
+      image: item.image,
+      price: item.price
+    })
+  });  
+})
+
+events.on('basket:changed', () => {
+  page.counter = basketData.getBasketItems().length;
+  basket.total = basketData.getTotal();
+  basket.items = basketData.getBasketItems().map((item, index) => {
+    const card = new Card(cloneTemplate(cardBasketTemplate), {
+      onClick: () => {
+        basketData.toogleOrderedItem(item.id, !basketData.checkItemInBasket(item.id));
+      }
+    });
+    return card.render({
+      index: index + 1,
+      title: item.title,
+      price: item.price
+    });
+  });
+});
+
+events.on('basket:open', () => {
+  modal.render({
+    content: basket.render()
+  });
+});
+
+events.on('order:open', () => {
+  modal.render({
+    content: order.render({
+      payment: orderData.order.payment,
+      address: orderData.order.address,
+      valid: orderData.validateOrder(),
+      errors: []
+    })
+  });
+});
+
+events.on('contacts:open', () => {
+  modal.render({
+    content: contacts.render({
+      email: orderData.order.email,
+      phone: orderData.order.phone,
+      valid: orderData.validateContacts(),
+      errors: []
+    })
+  });
+});
+
+events.on('modal:open', () => {
+  page.locked = true;
+});
+
+events.on('modal:close', () => {
+  page.locked = false;
+});
+
+api.getProductList()
+  .then(res => 
+    cardsData.setCatalog(res))
+  .catch(err => {
+    console.error(err);
+  });

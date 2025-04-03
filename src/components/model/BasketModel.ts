@@ -27,7 +27,7 @@ export class BasketData extends Model <IAppState> {
     this.order.items.forEach(id => this.toogleOrderedItem(id, false));
   }
 
-  checkIteminBasket(id: string): boolean {
+  checkItemInBasket(id: string): boolean {
     return _.includes(this.order.items, id);
   }
 
