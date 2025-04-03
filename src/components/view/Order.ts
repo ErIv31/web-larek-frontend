@@ -22,7 +22,7 @@ export class Order extends Form<IOrder> {
     });
   }
 
-  set selected(name: string) {
+  select(name: string) {
     this._buttons.forEach((button) => {
       this.toggleClass(button, 'button_alt-active', button.name === name);
     });
