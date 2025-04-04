@@ -35,7 +35,7 @@ export class AppData extends Model<IAppState> {
     return this.order.items.reduce((a, c) => a + this.catalog.find(it => it.id === c).price, 0);
   }
 
-toogleOrderedItem(id: string, isIncluded: boolean) {
+  toogleOrderedItem(id: string, isIncluded: boolean) {
     if (isIncluded) {
       this.order.items = _.uniq([...this.order.items, id]);
     } else {
